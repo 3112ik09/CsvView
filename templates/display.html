@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>Upload CSV File</title>
+        <link rel="stylesheet" type="text/css" href="static/styles.css">
+    </head>
+    <body>
+        <h1>Upload a CSV File</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".csv">
+            <input type="submit" value="Upload">
+        </form>
+        {% if header %}
+        <hr>
+            <div class="header">
+                <h2>CSV File Header:</h2>
+
+                <div class="table" style="text-align: center;" >
+                    {{ header|safe }}
+                </div>
+            </div>
+
+            
+            <div class="display">
+                <div class="catagorical">
+                    <hr>
+                    <h2> Catagorical </h2>
+                    {% for col, pie_chart in pie_charts.items() %}
+                        <img src="data:image/png;base64,{{ pie_chart|safe }}" alt="{{ col }} Pie Chart">
+                    {% endfor %}
+                </div>
+
+
+                <div class="numerical">
+                    <hr>
+                    <h2> Numerical</h2>
+                    {% for col, histogram in histograms.items() %}
+                        <img src="data:image/png;base64,{{ histogram|safe }}" alt="{{ col }} Histogram">
+                    {% endfor %}
+
+                </div>
+            </div>
+        {% endif %}
+        {% if error %}
+        <p>Error: {{ error }}</p>
+        {% endif %}
+    </body>
+</html>
